@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BETA AVIATOR</title>
+<style>
+body{margin:0;background:#0b0f1a;color:white;font-family:Arial;text-align:center}
+.header{padding:15px;background:#121a2e;font-weight:bold;font-size:22px;color:#ff3b3b;letter-spacing:1px}
+#canvasBox{position:relative;margin:20px auto;width:95%;max-width:500px;height:320px;background:radial-gradient(#1c2744,#0b0f1a);border-radius:20px;border:1px solid #2a3655;overflow:hidden}
+#plane{position:absolute;left:10%;bottom:20%;font-size:36px;transition:all 0.1s linear}
+#line{position:absolute;bottom:20%;left:0;height:2px;background:#ff3b3b;width:0}
+#multi{font-size:60px;font-weight:bold;margin-top:100px;color:white}
+#msg{color:#aaa;margin-top:10px}
+.controls{margin:20px}
+.bet-box{background:#121a2e;padding:15px;border-radius:15px;width:90%;max-width:400px;margin:0 auto}
+input{padding:12px;width:60%;border-radius:10px;border:none;font-size:16px;text-align:center}
+button{padding:12px 22px;border:none;border-radius:12px;font-weight:bold;cursor:pointer;margin:5px;font-size:16px}
+.green{background:#00c853;color:white}
+.red{background:#ff3b3b;color:white}
+</style>
+</head>
+<body>
+<div class="header">BETA AVIATOR ✈️</div>
+<div id="canvasBox">
+  <div id="line"></div>
+  <div id="plane">✈️</div>
+  <div id="multi">1.00x</div>
+  <div id="msg">Place bet and click FLY</div>
+</div>
+
+<div class="controls">
+  <div class="bet-box">
+    <input id="bet" type="number" value="100" placeholder="Bet amount">
+    <div style="margin-top:12px">
+      <button class="green" onclick="startGame()">FLY ✈️</button>
+      <button class="red" onclick="cashOut()">CASH OUT</button>
+    </div>
+    <p id="win" style="color:#00e676;font-weight:bold"></p>
+  </div>
+</div>
+
+<script>
+let mult=1, flying=false, timer, crashPoint;
+
+function startGame(){
+ if(flying) return;
+ flying=true;
+ mult=1;
+ crashPoint = (Math.random()*5 + 1.2).toFixed(2); // random crash 1.2x - 6.2x
+ document.getElementById('win').innerText='';
+ document.getElementById('msg').innerText='Flying...';
+ let plane=document.getElementById('plane');
+ let line=document.getElementById('line');
+ 
+ timer=setInterval(()=>{
+   mult+=0.02;
+   document.getElementById('multi').innerText=mult.toFixed(2)+'x';
+   plane.style.left = (10 + mult*8) + '%';
+   plane.style.bottom = (20 + mult*6) + '%';
+   line.style.width = (mult*10) + '%';
+   
+   if(mult >= crashPoint){
+     crash();
+   }
+ },80);
+}
+
+function crash(){
+ clearInterval(timer);
+ flying=false;
+ document.getElementById('multi').style.color='#ff3b3b';
+ document.getElementById('multi').innerText='CRASHED '+mult.toFixed(2)+'x';
+ document.getElementById('msg').innerText='💥 Plane crashed!';
+ document.getElementById('plane').innerText='💥';
+ setTimeout(resetPlane,1500);
+}
+
+function cashOut(){
+ if(!flying) return;
+ clearInterval(timer);
+ flying=false;
+ let bet = parseFloat(document.getElementById('bet').value) || 0;
+ let profit = bet * mult;
+ document.getElementById('win').innerText='You won Ksh '+profit.toFixed(2)+' at '+mult.toFixed(2)+'x';
+ document.getElementById('multi').style.color='#00e676';
+ resetPlane();
+}
+
+function resetPlane(){
+ setTimeout(()=>{
+   document.getElementById('plane').style.left='10%';
+   document.getElementById('plane').style.bottom='20%';
+   document.getElementById('line').style.width='0%';
+   document.getElementById('plane').innerText='✈️';
+   document.getElementById('multi').style.color='white';
+   document.getElementById('multi').innerText='1.00x';
+   document.getElementById('msg').innerText='Place bet and click FLY';
+ },500);
+}
+</script>
+</body>
+</html>
