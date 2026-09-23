@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BETA AVIATOR</title>
+  <style>
+    body { background:#0f172a; color:white; text-align:center; font-family:sans-serif; }
+    #game { margin:50px auto; width:300px; height:300px; background:#1e293b; border-radius:20px; padding:20px; }
+    #multiplier { font-size:48px; margin:30px; color:#f43f5e; }
+    button { padding:12px 25px; font-size:18px; background:#22c55e; border:none; border-radius:10px; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <h1>BETA AVIATOR</h1>
+  <div id="game">
+    <div id="multiplier">1.00x</div>
+    <button onclick="startGame()">FLY</button>
+    <button onclick="cashOut()">CASH OUT</button>
+  </div>
+<script>
+let mult = 1.00, flying = false, interval;
+function startGame(){
+  if(flying) return;
+  flying=true; mult=1.00;
+  interval=setInterval(()=>{
+    mult+=0.05;
+    document.getElementById('multiplier').innerText=mult.toFixed(2)+'x';
+    if(Math.random()<0.02){ crash(); }
+  },100);
+}
+function crash(){
+  clearInterval(interval); flying=false;
+  document.getElementById('multiplier').innerText='CRASHED at '+mult.toFixed(2)+'x';
+}
+function cashOut(){
+  if(!flying) return;
+  clearInterval(interval); flying=false;
+  alert('You cashed out at '+mult.toFixed(2)+'x!');
+}
+</script>
+</body>
+</html>
