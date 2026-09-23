@@ -3,8 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BETA AVIATOR - Win Big</title>
+<title>BETA AVIATOR V2 - Official</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#0a0e1a;color:#fff;min-height:100vh}
-.top{background:#11182e;padding:12px 20px;display
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Arial}
+body{background:#0e0e14;color:#fff}
+.header{background:#1c1c28;padding:10px 15px;display:flex;justify-content:space-between;align-items:center}
+.header b{color:#ff0040;font-size:20px;letter-spacing:1px}
+.header .bal{background:#2a2a3c;padding:5px 12px;border-radius:20px;color:#2bff88;font-weight:700}
+.main{max-width:1100px;margin:auto;display:grid;grid-template-columns:1fr 320px;gap:10px;padding:10px}
+@media(max-width:800px){.main{grid-template-columns:1fr}}
+.game{background:#171722;border-radius:16px;padding:10px;border:1px solid #2a2a3c}
+.history{display:flex;gap:6px;overflow-x:auto;padding-bottom:
